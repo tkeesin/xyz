@@ -1,0 +1,11 @@
+# custom-local-storage-class.yaml
+apiVersion: storage.k8s.io/v1
+kind: StorageClass
+metadata:
+  name: custom-local-storage
+provisioner: rancher.io/local-path
+parameters:
+  path: "/var/cockroachdb-data"
+reclaimPolicy: Retain
+volumeBindingMode: WaitForFirstConsumer
+

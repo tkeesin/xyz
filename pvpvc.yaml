@@ -1,0 +1,92 @@
+# pv-knode1.yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-knode1
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /var/cockroachdb-data
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - knode1
+
+---
+
+# pv-knode2.yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-knode2
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /var/cockroachdb-data
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - knode2
+
+---
+
+# pv-knode3.yaml
+apiVersion: v1
+kind: PersistentVolume
+metadata:
+  name: pv-knode3
+spec:
+  capacity:
+    storage: 5Gi
+  accessModes:
+    - ReadWriteOnce
+  hostPath:
+    path: /var/cockroachdb-data
+  nodeAffinity:
+    required:
+      nodeSelectorTerms:
+        - matchExpressions:
+            - key: kubernetes.io/hostname
+              operator: In
+              values:
+                - knode3
+
+# apiVersion: v1
+# kind: PersistentVolume
+# metadata:
+#   name: crdb-pv
+# spec:
+#   capacity:
+#     storage: 15Gi
+#   accessModes:
+#     - ReadWriteMany
+#   persistentVolumeReclaimPolicy: Retain
+#   hostPath:
+#     path: /cockroachdb-data
+
+
+#---
+#apiVersion: v1
+#kind: PersistentVolumeClaim
+#metadata:
+#  name: crdb-pvc
+#spec:
+#  accessModes:
+#    - ReadWriteOnce
+#  resources:
+#    requests:
+#      storage: 20Gi
