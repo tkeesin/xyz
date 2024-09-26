@@ -1,0 +1,34 @@
+NAME: yb-demo
+LAST DEPLOYED: Wed Sep 25 10:40:06 2024
+NAMESPACE: yb-demo
+STATUS: deployed
+REVISION: 1
+TEST SUITE: None
+NOTES:
+1. Get YugabyteDB Pods by running this command:
+  kubectl --namespace yb-demo get pods
+
+2. Get list of YugabyteDB services that are running:
+  kubectl --namespace yb-demo get services
+
+3. Get information about the load balancer services:
+  kubectl get svc --namespace yb-demo
+
+4. Connect to one of the tablet server:
+  kubectl exec --namespace yb-demo -it yb-tserver-0 bash
+
+5. Run YSQL shell from inside of a tablet server:
+  kubectl exec --namespace yb-demo -it yb-tserver-0 -- /home/yugabyte/bin/ysqlsh -h yb-tserver-0.yb-tservers.yb-demo
+
+6. Cleanup YugabyteDB Pods
+  For helm 2:
+  helm delete yb-demo --purge
+  For helm 3:
+  helm delete yb-demo -n yb-demo
+  NOTE: You need to manually delete the persistent volume
+  kubectl delete pvc --namespace yb-demo -l app=yb-master
+  kubectl delete pvc --namespace yb-demo -l app=yb-tserver
+
+NOTE: The yugabyted UI is now available and is enabled by default. It requires version 2.21.0 or greater.
+If you are using a custom image of YugabyteDB that is older than 2.21.0, please disable the UI by setting yugabytedUi.enabled to false.
+
