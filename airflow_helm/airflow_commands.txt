@@ -1,0 +1,39 @@
+# helm upgrade --install airflow apache-airflow/airflow --namespace airflow --create-namespace \
+--set webserverSecretKey=d1838c31bd83f967c7f906a6e7b40452 \
+--set webserverSecretKeySecretName=my-webserver-secret
+
+# helm install my-release apache-airflow/airflow \
+  --set executor=CeleryExecutor \
+  --set enablePodLaunching=false .
+
+# helm upgrade --install airflow apache-airflow/airflow -f override-values.yaml
+
+helm upgrade --install airflow airflow-1.15.0.tgz --namespace airflow
+
+helm delete airflow --namespace airflow
+
+
+-----
+
+https://robust-dinosaur-2ef.notion.site/Airflow-Helm-Chart-Quick-start-for-Beginners-3e8ee61c8e234a0fb775a07f38a0a8d4
+
+
+# Get the Chart values
+helm show values apache-airflow/airflow > values.yaml
+
+# Check the current revision
+helm ls -n airflow
+
+# Upgrade the chart
+helm upgrade --install airflow apache-airflow/airflow -n airflow -f values.yaml --debug
+
+# Check after
+helm ls -n airflow
+
+# To configure your Airflow instance
+extraEnv: |
+	- name: AIRFLOW__CORE__LOAD_EXAMPLES
+		value: 'True'
+
+# temp make avail webserver		
+kubectl port-forward svc/$RELEASE_NAME-webserver 8080:8080 --namespace $NAMESPACE
